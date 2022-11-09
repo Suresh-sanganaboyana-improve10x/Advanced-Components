@@ -17,6 +17,7 @@ public class HomeActivity extends AppCompatActivity {
         displayLocationActivity();
         displayDateOfBirthActivity();
         displayTeamActivity();
+        displayAddMembersActivity();
     }
 
     public void displayLuckNumberActivity() {
@@ -47,6 +48,14 @@ public class HomeActivity extends AppCompatActivity {
         Button teamBtn = findViewById(R.id.team_btn);
         teamBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, TeamActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    public void displayAddMembersActivity() {
+        Button addMembersBtn = findViewById(R.id.add_members_btn);
+        addMembersBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AddMembersActivity.class);
             startActivity(intent);
         });
     }
