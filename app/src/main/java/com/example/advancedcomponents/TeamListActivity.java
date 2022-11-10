@@ -1,0 +1,53 @@
+package com.example.advancedcomponents;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+
+public class TeamListActivity extends AppCompatActivity {
+
+    public ListView itemsLv;
+    public ArrayList<String> itemsList;
+    public ArrayAdapter<String> arrayAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_team_list);
+        handleButtonForAdd();
+        setupDataForListView();
+        setupMemberNameListView();
+    }
+
+    public void handleButtonForAdd() {
+        Button addBtn = findViewById(R.id.add_btn);
+        addBtn.setOnClickListener(view -> {
+            EditText memberNameTxt = findViewById(R.id.member_name_txt);
+            String nameTxt = memberNameTxt.getText().toString();
+            if (nameTxt.equals("") == false) {
+                arrayAdapter.add(nameTxt);
+                arrayAdapter.notifyDataSetChanged();
+            }
+            memberNameTxt.setText("");
+        });
+    }
+
+    public void setupDataForListView() {
+        itemsList = new ArrayList<>();
+        itemsList.add("Viswanath");
+        itemsList.add("Renuka");
+    }
+
+    public void setupMemberNameListView() {
+        itemsLv = findViewById(R.id.items_lv);
+        arrayAdapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_list_item_1, itemsList);
+        itemsLv.setAdapter(arrayAdapter);
+    }
+}
