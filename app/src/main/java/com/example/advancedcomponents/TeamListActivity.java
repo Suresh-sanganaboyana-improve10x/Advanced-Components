@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,20 @@ public class TeamListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_list);
         handleButtonForAdd();
+        handleDeleteButton();
         setupDataForListView();
         setupMemberNameListView();
+    }
+
+    public void handleDeleteButton() {
+        Button deleteBtn = findViewById(R.id.delete_btn);
+        deleteBtn.setOnClickListener(view -> {
+            EditText memberNameTxt = findViewById(R.id.member_name_txt);
+            String name = memberNameTxt.getText().toString();
+            arrayAdapter.remove(name);
+            arrayAdapter.notifyDataSetChanged();
+            memberNameTxt.setText("");
+        });
     }
 
     public void handleButtonForAdd() {
@@ -49,5 +62,11 @@ public class TeamListActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, itemsList);
         itemsLv.setAdapter(arrayAdapter);
+        itemsLv.setOnItemClickListener((adapterView, view, position, l) -> {
+            Toast.makeText(this, "Clicked : " + itemsList.get(position), Toast.LENGTH_SHORT).show();
+            String memberName = itemsList.get(position);
+            EditText memberNameTxt = findViewById(R.id.member_name_txt);
+            memberNameTxt.setText(memberName);
+        });
     }
 }
